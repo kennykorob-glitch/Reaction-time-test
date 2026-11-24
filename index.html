@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#4f5e4a"><title>На реакцию</title>
+<style>
+:root{--cr:#ece9d2;--mut:#c4c7ae;--am:#ffb347;--c1:#ff6a4d;--c2:#58b4ee;--c3:#86e05a;--c4:#d58be6;box-sizing:border-box}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{font-family:"Arial Narrow","Roboto Condensed","Helvetica Neue",Arial,sans-serif;font-weight:700;color:var(--cr);background:radial-gradient(ellipse at 30% 15%,rgba(255,255,255,.09),transparent 55%),repeating-linear-gradient(45deg,rgba(0,0,0,.04) 0 1px,transparent 1px 3px),linear-gradient(#5d6c56,#475440);overflow:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;box-shadow:inset 0 0 0 5px #20251c,inset 0 0 0 7px #8a5a2b,inset 0 0 120px rgba(0,0,0,.55)}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle,#d3d3c6 0 2px,#8a8a7e 3px 6px,transparent 7px) left 12px top 12px/16px 16px no-repeat,radial-gradient(circle,#d3d3c6 0 2px,#8a8a7e 3px 6px,transparent 7px) right 12px top 12px/16px 16px no-repeat,radial-gradient(circle,#d3d3c6 0 2px,#8a8a7e 3px 6px,transparent 7px) left 12px bottom 12px/16px 16px no-repeat,radial-gradient(circle,#d3d3c6 0 2px,#8a8a7e 3px 6px,transparent 7px) right 12px bottom 12px/16px 16px no-repeat}
+#a{position:relative;z-index:1;height:100%;max-width:560px;margin:0 auto;padding:max(18px,env(safe-area-inset-top)) 22px max(20px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:9px;overflow-y:auto}
+.hd{display:flex;gap:8px;align-items:center}
+h1{flex:1;margin:0;padding:9px;text-align:center;font-size:20px;letter-spacing:.14em;text-transform:uppercase;color:#1d2018;background:linear-gradient(#d4d7ca,#8f9484);border:2px solid #1a1d16;border-radius:6px;box-shadow:0 2px 0 #0d0f0b,inset 0 1px 0 #fff}
+h2{margin:0 0 7px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cr);text-shadow:0 1px 0 rgba(0,0,0,.6);display:flex;align-items:center;gap:8px}
+button{font:inherit;color:#1d2018;min-height:46px;padding:8px 14px;border:2px solid #1a1d16;border-radius:6px;text-transform:uppercase;letter-spacing:.08em;background:linear-gradient(#a9ae9d,#6f7566);box-shadow:0 3px 0 #0d0f0b,inset 0 1px 0 rgba(255,255,255,.5);cursor:pointer}
+button:active{transform:translateY(2px);box-shadow:0 1px 0 #0d0f0b}
+button.main{color:var(--cr);font-size:17px;background:linear-gradient(#3a3f33,#1b1e18);box-shadow:0 3px 0 #000,inset 0 1px 0 rgba(255,255,255,.18)}
+button.go{background:linear-gradient(#e0503a,#8e1d12);box-shadow:0 3px 0 #3d0a05,inset 0 1px 0 rgba(255,255,255,.35)}
+button.on{color:var(--am);text-shadow:0 0 8px rgba(255,179,71,.8);background:linear-gradient(#1b1e18,#2e3228);box-shadow:inset 0 3px 8px #000}
+.sq{width:48px;padding:0;font-size:24px;border-radius:50%;font-family:Georgia,serif;font-style:italic;background:radial-gradient(circle at 35% 30%,#f2f3ec,#8d9283)}
+.card{background:linear-gradient(rgba(255,255,255,.05),rgba(0,0,0,.1));border:1.5px solid rgba(236,233,210,.55);border-radius:8px;padding:10px 12px;box-shadow:inset 0 0 14px rgba(0,0,0,.25),0 2px 0 rgba(0,0,0,.35)}
+.row{display:flex;gap:8px}.row>*{flex:1 1 0;min-width:0}
+.win{display:inline-block;min-width:0;white-space:nowrap;text-align:center;padding:3px 6px;font:700 26px/1.15 "Courier New",monospace;color:var(--am);background:#16140d;border:2px solid #0b0b08;border-radius:5px;box-shadow:0 0 0 2px #9aa18f,inset 0 0 10px #000;text-shadow:0 0 7px rgba(255,170,60,.75)}
+.win small{font-size:13px}
+.stp{display:flex;align-items:center;gap:5px}.stp .win{flex:1}
+.stp button{width:42px;height:42px;min-height:42px;flex:none;padding:0;border-radius:50%;font-size:24px;color:var(--cr);touch-action:none;user-select:none;border:2px solid #050605;background:radial-gradient(circle,#1b1b1b 0 52%,transparent 54%),repeating-conic-gradient(#3a3a3a 0 9deg,#101010 9deg 18deg);box-shadow:0 3px 0 #000,inset 0 0 0 1px rgba(255,255,255,.12)}
+.lp{display:inline-block;width:12px;height:12px;border-radius:50%;background:#3b1410;border:2px solid #9aa18f}.lp.on{background:#ff5a3c;box-shadow:0 0 10px #ff5a3c}
+.mic{display:flex;gap:10px;align-items:center}.mic .gw{width:48%}.mc{flex:1}
+.gg{display:block;width:100%;filter:drop-shadow(0 2px 2px rgba(0,0,0,.6))}
+.nd{transform-origin:100px 100px;transition:transform .08s linear;transform:rotate(-60deg)}.nd.sw{animation:sw 1.7s ease-in-out forwards}@keyframes sw{from{transform:rotate(-60deg)}to{transform:rotate(60deg)}}
+.st{font-size:12px;line-height:1.25;min-height:3.7em;margin:0 0 6px;color:var(--mut);font-weight:600}.st.ok{color:#9be07a}.st.err{color:#ff9a80}
+.tgw{display:flex;align-items:center;justify-content:center;gap:18px;text-transform:uppercase;letter-spacing:.1em;font-size:14px;color:var(--mut)}.tgw .a{color:var(--am);text-shadow:0 0 8px rgba(255,179,71,.7)}
+.tg{position:relative;width:62px;height:62px;padding:0;border-radius:50%;background:radial-gradient(circle,#2a2d25 0 22%,#c5c9ba 24% 60%,#6e7466 62%);box-shadow:0 3px 0 #000}
+.tg i{position:absolute;left:50%;bottom:50%;width:9px;height:32px;margin-left:-4.5px;border-radius:5px;background:linear-gradient(90deg,#555,#eee,#555);transform-origin:50% 100%;transition:transform .15s}
+.tg i:after{content:"";position:absolute;top:-8px;left:-3.5px;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#555,#080808)}
+.sigw{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;user-select:none}
+.sigw .l{text-transform:uppercase;letter-spacing:.12em;font-size:min(5vw,3.2vh,22px);text-align:center;color:var(--cr)}
+.sig{--b:0 0 0 4px #1a1d16,0 6px 0 #0d0f0b,inset 0 0 30px rgba(0,0,0,.55);width:min(72vw,42vh,330px);aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;border:10px solid #9aa18f;color:#fff;font-weight:900;text-shadow:0 2px 3px rgba(0,0,0,.5)}
+.sig.red{background:radial-gradient(circle at 35% 30%,#ff7a68,#c8141b 55%,#6e0a0e);box-shadow:var(--b),0 0 44px rgba(255,60,40,.6)}
+.sig.yel{color:#2a1e12;text-shadow:none;background:radial-gradient(circle at 35% 30%,#ffe27a,#e0a100 55%,#7a5600);box-shadow:var(--b),0 0 44px rgba(255,190,40,.6)}
+.sig.green{background:radial-gradient(circle at 35% 30%,#8dff97,#2e8b3a 55%,#124d1a);box-shadow:var(--b),0 0 44px rgba(70,255,100,.55)}
+.sig.res{background:radial-gradient(circle at 35% 30%,#d8eeff,#4a78a0 55%,#1d3a55);box-shadow:var(--b),0 0 40px rgba(110,190,255,.5)}
+.sig.miss{background:radial-gradient(circle at 35% 30%,#a4a490,#55554a 55%,#2a2a22);box-shadow:var(--b)}
+.sig .n{font-size:min(34vw,20vh,180px);line-height:1}.sig .n.w{font-size:min(11vw,6.5vh,52px);letter-spacing:.04em}
+.sum{display:flex;text-align:center}.sum>div{flex:1}.sum b{display:block;margin:0 4px 3px;font-size:24px}.sum span{font-size:12px;color:var(--mut)}
+.tabs{display:flex;gap:6px}.tabs button{flex:1}
+.glass{background:#141810;border:2px solid #0b0d0a;border-radius:6px;box-shadow:0 0 0 2px #9aa18f,inset 0 0 14px #000;padding:4px}
+.bar{height:14px;border-radius:4px;background:#16140d;border:2px solid #0b0b08;box-shadow:0 0 0 1px #9aa18f;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(#ffc66a,#e08a1e)}
+.lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;margin:6px 0 2px}.lg i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:5px;border:1px solid rgba(0,0,0,.5)}
+.ac{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid rgba(236,233,210,.25)}.ac .d{width:16px;height:16px;border-radius:50%;border:2px solid #9aa18f}.ac div{flex:1}.ac span{display:block;font-size:12px;color:var(--mut)}.ac b{font-size:20px;text-align:right;color:var(--am)}
+.hr{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid rgba(236,233,210,.25)}.hr>div{flex:1}.hr span{display:block;font-size:12px;color:var(--mut)}.hr b{color:var(--am)}
+.hr button{width:38px;min-height:38px;padding:0}
+.sp{margin:auto;text-align:center;width:100%}.sp .gw{width:min(84vw,340px);margin:0 auto;background:#1a1d16;border:5px solid #9aa18f;border-radius:14px;padding:12px 10px 4px;box-shadow:0 4px 0 #0d0f0b}
+.sp h1{margin:16px 0 6px;padding:12px 18px}.sp p{margin:0 0 16px;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:var(--mut)}
+.ls{display:flex;gap:16px;justify-content:center}.ls i{width:18px;height:18px;border-radius:50%;background:#3b2a12;border:2px solid #9aa18f;animation:bl .01s linear forwards}.ls i:nth-child(2){animation-delay:.55s}.ls i:nth-child(3){animation-delay:1.1s}@keyframes bl{to{background:var(--am);box-shadow:0 0 12px var(--am)}}
+.ov{position:fixed;inset:0;z-index:5;background:rgba(10,14,8,.7);display:flex;align-items:center;justify-content:center;padding:18px}.ov .card{max-width:440px;max-height:86%;overflow:auto;background:#4a5742}.ov p{margin:0 0 10px;line-height:1.35;font-weight:600}.ov h3{margin:0 0 8px;text-transform:uppercase;letter-spacing:.1em}
+</style></head><body><div id="a"></div><script>
+var $=document.getElementById('a'),HAND=['Правая рука','Левая рука'],LIM={prep:[3,10],yel:[1,10],tmo:[1,30],dist:[1,30]};
+function ld(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+var cfg=Object.assign({prep:5,yel:10,tmo:5,dist:3,hand:0,thr:12},ld('kr_cfg',{})),hist=ld('kr_hist',[]);
+var scr='splash',run=null,result=null,sHand=cfg.hand|0,starting=false,TM=[],lock=null;
+var AC,stream,an,msrc,buf,raf,noise=0,calib=null,micMsg='Нажмите «Калибровка», разрешите микрофон и бросьте нож в мишень.',micK='';
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+function p2(n){return(n<10?'0':'')+n}function fd(d){return p2(d.getDate())+'.'+p2(d.getMonth()+1)+'.'+p2(d.getFullYear()%100)}
+function f2(x){return(Math.round(x*100)/100).toFixed(2).replace('.',',')}function f1(x){return String(Math.round(x*10)/10).replace('.',',')}
+function avg(a){return a.length?a.reduce(function(s,v){return s+v},0)/a.length:0}function ts(x){return x.ts||[]}
+function pl(n,a){var m=n%100,d=n%10;return n+' '+(m>10&&m<15?a[2]:d==1?a[0]:d>1&&d<5?a[1]:a[2])}
+function vib(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
+function gauge(id,cl){var t='';for(var i=0;i<=10;i++){var a=(-60+i*12)*Math.PI/180,r=i%5?72:66,n=Math.sin(a),c=Math.cos(a);t+='<line x1="'+(100+n*78).toFixed(1)+'" y1="'+(100-c*78).toFixed(1)+'" x2="'+(100+n*r).toFixed(1)+'" y2="'+(100-c*r).toFixed(1)+'" stroke="#2a2410" stroke-width="'+(i%5?1.5:3)+'"/>'}
+ return'<svg viewBox="0 0 200 112" class="gg"><path d="M6 104A94 94 0 0 1 194 104Z" fill="#e9dda8" stroke="#15170f" stroke-width="4"/>'+t+'<text x="100" y="86" text-anchor="middle" font-size="9" letter-spacing="2" fill="#2a2410">УРОВЕНЬ</text><g id="'+id+'" class="nd '+(cl||'')+'"><line x1="100" y1="100" x2="100" y2="24" stroke="#b3261e" stroke-width="2.5" stroke-linecap="round"/></g><circle cx="100" cy="100" r="7" fill="#1c1c18"/></svg>'}
+/* ---- микрофон ---- */
+function setMic(m,k){micMsg=m;micK=k||'';var e=document.getElementById('st');if(e){e.textContent=m;e.className='st '+micK}}
+function errT(e){return e&&(e.name=='NotAllowedError'||e.name=='PermissionDeniedError')?'Доступ запрещён. Разрешите микрофон в настройках и повторите.':e&&e.name=='NotFoundError'?'Микрофон не найден.':e&&e.name=='NotReadableError'?'Микрофон занят другим приложением.':(e&&e.message)||'Не удалось включить микрофон.'}
+async function initMic(){
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)throw new Error(location.protocol=='file:'?'Микрофон недоступен из локального файла. Откройте приложение по ссылке HTTPS.':'Браузер не поддерживает микрофон.');
+ if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(!C)throw new Error('Нет поддержки звука.');AC=new C()}
+ if(AC.state=='suspended')await AC.resume();
+ if(!stream){stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});msrc=AC.createMediaStreamSource(stream);an=AC.createAnalyser();an.fftSize=2048;msrc.connect(an)}
+ meter()}
+function freeMic(){cancelAnimationFrame(raf);try{stream&&stream.getTracks().forEach(function(t){t.stop()})}catch(e){}try{msrc&&msrc.disconnect()}catch(e){}stream=msrc=an=null}
+function rms(){if(!an)return 0;if(!buf||buf.length!=an.fftSize)buf=new Uint8Array(an.fftSize);an.getByteTimeDomainData(buf);var s=0;for(var i=0;i<buf.length;i++){var x=(buf[i]-128)/128;s+=x*x}return Math.sqrt(s/buf.length)*100}
+function meter(){cancelAnimationFrame(raf);var f=function(){if(!an||run)return;var e=document.getElementById('lv');if(e)e.style.transform='rotate('+(-60+Math.min(100,rms()*2)*1.2)+'deg)';raf=requestAnimationFrame(f)};raf=requestAnimationFrame(f)}
+function stopCal(){if(calib){clearInterval(calib.iv);calib=null}}
+async function calibrate(){
+ if(calib){return finCal()}
+ try{await initMic()}catch(e){return setMic(errT(e),'err')}
+ var c={max:0,v:[],iv:0};
+ c.iv=setInterval(function(){var r=rms();if(c.v.length<20000)c.v.push(r);if(r>c.max){c.max=r;setMic('Идёт калибровка. Самый громкий звук: '+f1(r)+'. Бросьте нож в мишень и нажмите «Завершить».')}},15);
+ calib=c;setMic('Идёт калибровка. Бросьте нож в мишень (или ударьте по стенду), затем нажмите «Завершить».');draw()}
+function finCal(){
+ var c=calib;stopCal();freeMic();var v=c.v.slice().sort(function(a,b){return a-b}),pk=c.max;noise=v.length?v[v.length>>1]:0;
+ if(pk<3){setMic('Звук не зафиксирован. Бросьте нож во время калибровки и повторите.','err');return draw()}
+ var t=Math.ceil(Math.max(pk*.5,noise*2.5,3)),w=0;if(t>pk*.9){t=Math.max(3,Math.floor(pk*.8));w=1}
+ cfg.thr=Math.min(50,t);sv('kr_cfg',cfg);
+ setMic(w?'Калибровка завершена, но удар почти не отличается от шума. Уменьшите шум или поставьте телефон ближе.':'Калибровка завершена. Эталон удара: '+f1(pk)+'.',w?'err':'ok');draw()}
+/* ---- экраны ---- */
+function modal(h,t,ok){var o=document.createElement('div');o.className='ov';o.innerHTML='<div class="card"><h3>'+h+'</h3>'+t+'<div class="row" style="margin-top:6px">'+(ok?'<button class="main" id="mo">Удалить</button>':'')+'<button id="mc">'+(ok?'Отмена':'Понятно')+'</button></div></div>';document.body.appendChild(o);
+ o.querySelector('#mc').onclick=function(){o.remove()};if(ok)o.querySelector('#mo').onclick=function(){o.remove();ok()}}
+function info(){modal('Как это работает','<p>Приложение слушает микрофон и измеряет, за сколько секунд после зелёного сигнала нож попал в мишень — по звуку удара.</p><p><b>Цикл:</b> красный сигнал с обратным отсчётом (подготовка), затем жёлтая фаза случайной длительности (ждите без отсчёта) и зелёный «Бросок». Время от зелёного сигнала до звука попадания записывается. Нет звука за время ожидания — промах. Циклы идут сами, пока вы не нажмёте «Закончить» или не коснётесь цветного экрана.</p><p><b>Калибровка:</b> нажмите «Калибровка», бросьте нож в мишень (можно несколько раз) и нажмите «Завершить». Самый громкий звук станет эталоном удара, порог чувствительности подберётся сам. Громкий посторонний звук может быть принят за попадание.</p><p><b>Настройки:</b> подготовка — секунды красного отсчёта; жёлтая — максимум случайной паузы; ждать удар — сколько секунд после «Броска» ждать звук.</p><p>Метайте только на безопасной оборудованной площадке.</p>')}
+function head(t,back,right){return'<div class="hd">'+(back?'<button class="sq" data-c="'+back+'">‹</button>':'')+'<h1>'+t+'</h1>'+(right||'')+'</div>'}
+function stp(k,l){return'<div class="card"><h2>'+l+'</h2><div class="stp"><button data-k="'+k+'" data-d="-1">−</button><b class="win" id="v_'+k+'">'+cfg[k]+(k=='dist'?' <small>м</small>':'')+'</b><button data-k="'+k+'" data-d="1">+</button></div></div>'}
+function chg(k,d){var v=Math.max(LIM[k][0],Math.min(LIM[k][1],cfg[k]+d));if(v==cfg[k])return;cfg[k]=v;sv('kr_cfg',cfg);var e=document.getElementById('v_'+k);if(e)e.innerHTML=v+(k=='dist'?' <small>м</small>':'')}
+function setup(){return head('На реакцию','','<button class="sq" data-c="info()">i</button>')
+ +'<button class="main" data-c="stats()">К статистике</button>'
+ +'<div class="row">'+stp('prep','Подготовка, сек')+stp('yel','Жёлтая, до сек')+'</div><div class="row">'+stp('tmo','Ждать, сек')+stp('dist','Дистанция')+'</div>'
+ +'<div class="card"><h2>Рука</h2><div class="tgw"><span class="'+(cfg.hand?'':'a')+'">Правая</span><button class="tg" data-c="cfg.hand=1-cfg.hand;sv(\'kr_cfg\',cfg);draw()" aria-label="Рука"><i style="transform:rotate('+(cfg.hand?35:-35)+'deg)"></i></button><span class="'+(cfg.hand?'a':'')+'">Левая</span></div></div>'
+ +'<div class="card"><h2>Микрофон <i class="lp'+(calib?' on':'')+'"></i></h2><div class="mic"><div class="gw">'+gauge('lv')+'</div><div class="mc"><div class="st '+micK+'" id="st">'+esc(micMsg)+'</div><button style="width:100%" class="'+(calib?'on':'')+'" data-c="calibrate()">'+(calib?'Завершить':'Калибровка')+'</button></div></div></div>'
+ +'<button class="main go" data-c="start()">Начать тренировку</button>'}
+function runV(){return'<div class="card" style="padding:6px"><div class="sum"><div><b class="win" id="rk">'+run.k+'</b><span>попытка</span></div><div><b class="win" id="rl">—</b><span>последнее, с</span></div><div><b class="win" id="ra">—</b><span>среднее, с</span></div></div></div><div class="sigw" data-pd="stop()"><div class="sig red" id="sg"><div class="n" id="sn">'+run.prep+'</div></div><div class="l" id="sl">Приготовьтесь</div></div><button data-c="stop()">Закончить тренировку</button>'}
+function sig(c,b,l){var m=document.getElementById('sg');if(!m)return;m.className='sig '+c;var n=document.getElementById('sn');n.textContent=b;n.className='n'+(/^\d+$/.test(b)?'':' w');document.getElementById('sl').textContent=l}
+function live(){var r=run,a;if(!r)return;a=document.getElementById('rk');if(a)a.textContent=r.k;a=document.getElementById('rl');if(a)a.textContent=r.ts.length?f2(r.ts[r.ts.length-1]):'—';a=document.getElementById('ra');if(a)a.textContent=r.ts.length?f2(avg(r.ts)):'—'}
+function W(ms,r,t){return new Promise(function(res){TM.push(setTimeout(function(){res(run===r&&r.tok===t)},ms))})}
+async function start(){
+ if(run||starting)return;stopCal();starting=true;
+ try{await initMic()}catch(e){starting=false;setMic(errT(e),'err');modal('Микрофон',esc(errT(e)));return draw()}
+ starting=false;run={tok:0,hand:cfg.hand|0,dist:cfg.dist,prep:cfg.prep,yel:cfg.yel,tmo:cfg.tmo,thr:Math.max(cfg.thr,noise*2.5),k:0,n:0,hits:0,ts:[]};
+ scr='run';vib(60);draw();try{if(navigator.wakeLock)lock=await navigator.wakeLock.request('screen')}catch(e){}cycle(run)}
+async function cycle(r){
+ if(run!==r)return;var t=++r.tok;r.k++;live();
+ for(var n=r.prep;n>0;n--){sig('red',String(n),'Приготовьтесь');if(!await W(1000,r,t))return}
+ sig('yel','●','Ожидайте сигнал');
+ if(!await W(1000+Math.random()*(Math.max(1,r.yel)*1000-1000),r,t))return;
+ var g=performance.now(),end=g+r.tmo*1000,hit=0;sig('green','БРОСОК','Зелёный сигнал');vib(120);
+ while(run===r&&r.tok===t&&performance.now()<end){
+  var now=performance.now();
+  if(now-g>120&&rms()>r.thr){hit=1;var s=(now-g)/1000;r.n++;r.hits++;r.ts.push(s);sig('res',f2(s)+' с','Попадание зафиксировано');live();vib(60);if(!await W(1300,r,t))return;break}
+  await new Promise(function(q){setTimeout(q,12)})}
+ if(run!==r||r.tok!==t)return;
+ if(!hit){r.n++;sig('miss','ВРЕМЯ','Попадание не зафиксировано');if(!await W(700,r,t))return}
+ cycle(r)}
+function stop(){var r=run;if(!r)return;run=null;TM.forEach(clearTimeout);TM=[];try{lock&&lock.release()}catch(e){}lock=null;freeMic();
+ if(r.n>0){result={d:Date.now(),hand:r.hand,dist:r.dist,n:r.n,hits:r.hits,ts:r.ts.map(function(x){return Math.round(x*1000)/1000})};hist.push(result);sv('kr_hist',hist);sHand=r.hand;scr='saved'}else scr='setup';draw()}
+function saved(){var r=result,t=ts(r),pc=r.n?r.hits*100/r.n:0;
+ return head('Сохранено','')+'<div class="card" style="margin:auto 0"><div style="color:var(--mut)">'+HAND[r.hand]+' · '+r.dist+' м · '+fd(new Date(r.d))+'</div><div class="win" style="font-size:50px;margin:8px 0">'+(t.length?f2(avg(t))+' <small style="font-size:24px">с</small>':'—')+'</div><div style="color:var(--mut)">среднее время реакции · попаданий '+Math.round(pc)+'%</div><div class="bar" style="margin:8px 0"><i style="width:'+pc+'%"></i></div><div class="sum"><div><b>'+r.hits+'</b><span>попал</span></div><div><b>'+(r.n-r.hits)+'</b><span>мимо</span></div><div><b>'+(t.length?f2(Math.min.apply(null,t)):'—')+'</b><span>лучшее, с</span></div></div></div><button class="main go" data-c="start()">Ещё раз</button><button data-c="stats()">К статистике</button><button data-c="go(\'setup\')">К настройкам</button>'}
+/* ---- статистика ---- */
+function cmap(A){var d=[];A.forEach(function(x){if(d.indexOf(x.dist)<0)d.push(x.dist)});d.sort(function(a,b){return a-b});var m={};d.forEach(function(k,i){m[k]='var(--c'+(i%4+1)+')'});return m}
+function chart(A,CM){var W=320,H=150,pl_=38,iw=W-pl_-8,ih=H-18,o='',S=A.filter(function(x){return ts(x).length}).sort(function(a,b){return a.d-b.d}),G={},ds=[],L=1,mx=0;
+ if(!S.length)return'<div style="padding:8px 0;color:var(--mut)">Нет попаданий в сохранённых тренировках.</div>';
+ S.forEach(function(x){var k=x.dist;if(!G[k]){G[k]=[];ds.push(k)}G[k].push(avg(ts(x)))});ds.sort(function(a,b){return a-b});
+ ds.forEach(function(k){G[k]=G[k].slice(-10);L=Math.max(L,G[k].length);mx=Math.max(mx,Math.max.apply(null,G[k]))});
+ var hi=Math.max(.2,Math.ceil(mx*1.15*10)/10),Y=function(v){return 10+ih-ih*v/hi},st=L>1?(iw-20)/(L-1):0;
+ [0,hi/2,hi].forEach(function(v){var y=Y(v);o+='<line x1="'+pl_+'" x2="'+(W-8)+'" y1="'+y+'" y2="'+y+'" stroke="#cfd4bf" stroke-opacity=".25" stroke-dasharray="3 3"/><text x="'+(pl_-4)+'" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="#cfd4bf">'+f2(v)+'</text>'});
+ ds.forEach(function(k){var pts=G[k].map(function(v,j){return[pl_+10+j*st,Y(v)]});if(pts.length>1)o+='<polyline fill="none" stroke-width="3" stroke-linejoin="round" style="stroke:'+CM[k]+'" points="'+pts.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' ')+'"/>';pts.forEach(function(p){o+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.5" style="fill:'+CM[k]+'"/>'})});
+ return'<div class="glass"><svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block">'+o+'</svg></div><div class="lg">'+ds.map(function(k){return'<span><i style="background:'+CM[k]+'"></i>'+k+' м</span>'}).join('')+'</div><div style="font-size:12px;color:var(--mut);margin:2px 0 6px">Последние 10 тренировок на каждой дистанции. Чем ниже время, тем лучше</div>'}
+function statsV(){var h=head('Статистика','go(\'setup\')'),A=hist.filter(function(x){return(x.hand|0)==sHand});
+ h+='<div class="tabs">'+HAND.map(function(n,i){return'<button class="'+(sHand==i?'on':'')+'" data-c="sHand='+i+';draw()">'+n+'</button>'}).join('')+'</div>';
+ if(!A.length)return h+'<div class="card" style="color:var(--mut)">Для этой руки пока нет сохранённых тренировок.</div>';
+ var CM=cmap(A),D={},ds=[];A.forEach(function(x){if(!D[x.dist]){D[x.dist]=[];ds.push(x.dist)}D[x.dist].push(x)});ds.sort(function(a,b){return a-b});
+ h+='<div class="card"><h2>Динамика реакции, с</h2>'+chart(A,CM);
+ ds.forEach(function(k){var t=[];D[k].forEach(function(x){t=t.concat(ts(x))});h+='<div class="ac"><i class="d" style="background:'+CM[k]+'"></i><div><b style="font-size:16px;text-align:left">'+k+' м</b><span>'+pl(D[k].length,['тренировка','тренировки','тренировок'])+' · лучшее '+(t.length?f2(Math.min.apply(null,t))+' с':'—')+'</span></div><b>'+(t.length?f2(avg(t))+' с':'—')+'<span style="text-align:right">сред. время</span></b></div>'});
+ h+='</div><div class="card"><h2>История</h2>';
+ A.slice().reverse().slice(0,300).forEach(function(x){var d=new Date(x.d),t=ts(x);h+='<div class="hr"><div>'+fd(d)+'<span>'+p2(d.getHours())+':'+p2(d.getMinutes())+'</span></div><div>'+pl(x.n,['попытка','попытки','попыток'])+'<span>'+x.dist+' м · '+(x.hand?'Л':'П')+'</span></div><b>'+(t.length?f2(avg(t))+' с':'—')+'</b><button data-c="del('+x.d+')">✕</button></div>'});
+ return h+'<button style="margin-top:8px;width:100%" data-c="clr()">Удалить всю историю ('+HAND[sHand].toLowerCase()+')</button></div>'}
+function del(d){modal('Удалить тренировку?','<p>Это нельзя отменить.</p>',function(){hist=hist.filter(function(h){return h.d!=d});sv('kr_hist',hist);draw()})}
+function clr(){modal('Удалить всю историю?','<p>'+HAND[sHand]+'. Это нельзя отменить.</p>',function(){hist=hist.filter(function(x){return(x.hand|0)!=sHand});sv('kr_hist',hist);draw()})}
+/* ---- навигация ---- */
+function stats(){stopCal();freeMic();scr='stats';sHand=cfg.hand|0;draw()}
+function go(s){stopCal();if(s=='setup')freeMic();scr=s;draw()}
+function draw(){$.innerHTML=scr=='splash'?'<div class="sp"><div class="gw">'+gauge('sw0','sw')+'</div><h1>На реакцию</h1><p>Тренировка метания ножей</p><div class="ls"><i></i><i></i><i></i></div></div>':scr=='run'?runV():scr=='saved'?saved():scr=='stats'?statsV():setup();
+ $.scrollTop=0;if(scr=='run')live();if(an&&!run)meter()}
+document.addEventListener('click',function(e){var b=e.target.closest('[data-c]');if(b)eval(b.dataset.c)});
+document.addEventListener('pointerdown',function(e){var p=e.target.closest('[data-pd]');if(p)return eval(p.dataset.pd);var b=e.target.closest('button[data-k]');if(!b)return;var k=b.dataset.k,d=+b.dataset.d;chg(k,d);clearTimeout(b._t);b._t=setTimeout(function(){b._i=setInterval(function(){chg(k,d)},90)},420)});
+['pointerup','pointercancel','pointerleave'].forEach(function(n){document.addEventListener(n,function(e){var b=e.target.closest&&e.target.closest('button[data-k]');if(b){clearTimeout(b._t);clearInterval(b._i)}},true)});
+window.addEventListener('pagehide',freeMic);
+draw();setTimeout(function(){if(scr=='splash')go('setup')},1800);
+</script></body></html>
