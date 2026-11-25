@@ -19,7 +19,7 @@ apply()})();
 :root{--ac:#e8ff3a;--acx:#e8ff3a;--ink:#f2f2ee;--mut:#7d7d79;--ln:#26262a;--c1:#e8ff3a;--c2:#ff5a3c;--c3:#4da3ff;--c4:#c58bff;box-sizing:border-box;
  --bg:#0b0b0c;--onink:#0b0b0c;--bt:transparent;--bd2:#3a3a3e;--bd3:#55555a;--press:rgba(255,255,255,.1);--goh:#cfe62f;--prib:#e8ff3a;
  --err:#ff6a4d;--card:#161618;--cbd:#333;--ovl:rgba(0,0,0,.75);--pt:#cfcfca;--grid:#cfd4bf;--ring:#26262a;color-scheme:dark}
-:root[data-theme="light"]{--ac:#e8ff3a;--acx:#4f6b00;--ink:#141416;--mut:#6c6c66;--ln:#e0e0d7;--c1:#6d8a00;--c2:#e0481f;--c3:#1f78d6;--c4:#9a4fd6;
+:root[data-theme="light"]{--ac:#e8ff3a;--acx:#e8ff3a;--ink:#141416;--mut:#6c6c66;--ln:#e0e0d7;--c1:#e8ff3a;--c2:#e0481f;--c3:#1f78d6;--c4:#9a4fd6;
  --bg:#f4f4ef;--onink:#f4f4ef;--bt:#ffffff;--bd2:#c4c4ba;--bd3:#a8a89e;--press:rgba(0,0,0,.07);--goh:#d3e82c;--prib:#b7cc1c;
  --err:#d63a1f;--card:#ffffff;--cbd:#d6d6cc;--ovl:rgba(0,0,0,.45);--pt:#3c3c38;--grid:#5c5c54;--ring:#dcdcd2;color-scheme:light}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -43,7 +43,7 @@ body[class^=p-] button{border-color:currentColor;background:none}
 .row{display:flex;gap:0}.row>*{flex:1 1 0;min-width:0}.row>.card+.card{border-left:1px solid var(--ln);padding-left:16px;margin-left:16px}
 .win{flex:1;text-align:center;font:700 34px/1 ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;white-space:nowrap}.win small{font-size:13px;color:var(--mut);font-weight:500}
 .stp{display:flex;align-items:center;gap:6px}
-.stp button{width:42px;height:42px;min-height:42px;padding:0;flex:none;border-radius:50%;font-size:22px;font-weight:300;letter-spacing:0;touch-action:none;user-select:none}
+.stp button{width:42px;height:42px;min-height:42px;padding:0;flex:none;border-radius:50%;font-size:22px;font-weight:300;letter-spacing:0;display:flex;align-items:center;justify-content:center;line-height:1;touch-action:none;user-select:none}
 .seg{display:flex;border:1px solid var(--bd2);border-radius:999px;padding:3px;gap:3px}.seg button{flex:1;border:0;min-height:42px}.seg button:not(.on){background:none}
 .lv{height:3px;background:var(--ln);border-radius:2px;overflow:hidden;margin:4px 0 10px}.lv i{display:block;height:100%;background:var(--acx);transform-origin:0 0;transform:scaleX(0)}
 .st{font-size:12px;line-height:1.35;min-height:3.2em;margin:0 0 8px;color:var(--mut);font-weight:500}.st.ok{color:var(--acx)}.st.err{color:var(--err)}
@@ -111,11 +111,11 @@ function settings(){var o=document.createElement('div');o.className='ov';
  o.onclick=function(e){if(e.target===o){o.remove();return}var b=e.target.closest&&e.target.closest('button');if(!b)return;if(b.dataset.x){o.remove();return}if(b.dataset.th){window.setTheme(b.dataset.th);paint()}};
  document.body.appendChild(o);paint()}
 function head(t,back,right){return'<div class="hd">'+(back?'<button class="sq" data-c="'+back+'">‹</button>':'')+'<h1>'+t+'</h1>'+(right||'')+'</div>'}
-function stp(k,l){return'<div class="card"><h2>'+l+'</h2><div class="stp"><button data-k="'+k+'" data-d="-1">−</button><b class="win" id="v_'+k+'">'+cfg[k]+(k=='dist'?' <small>м</small>':'')+'</b><button data-k="'+k+'" data-d="1">+</button></div></div>'}
-function chg(k,d){var v=Math.max(LIM[k][0],Math.min(LIM[k][1],cfg[k]+d));if(v==cfg[k])return;cfg[k]=v;sv('kr_cfg',cfg);var e=document.getElementById('v_'+k);if(e)e.innerHTML=v+(k=='dist'?' <small>м</small>':'')}
+function stp(k,l){return'<div class="card"><h2>'+l+'</h2><div class="stp"><button data-k="'+k+'" data-d="-1">−</button><b class="win" id="v_'+k+'">'+cfg[k]+'</b><button data-k="'+k+'" data-d="1">+</button></div></div>'}
+function chg(k,d){var v=Math.max(LIM[k][0],Math.min(LIM[k][1],cfg[k]+d));if(v==cfg[k])return;cfg[k]=v;sv('kr_cfg',cfg);var e=document.getElementById('v_'+k);if(e)e.textContent=v}
 function setup(){return head('На реакцию','','<button class="sq" data-c="info()">i</button><button class="sq" data-c="settings()" aria-label="Настройки">'+GEAR+'</button>')
  +'<button class="main" data-c="stats()">К статистике</button>'
- +'<div class="row">'+stp('prep','Подготовка, сек')+stp('yel','Жёлтая, до сек')+'</div><div class="row">'+stp('tmo','Ждать, сек')+stp('dist','Дистанция')+'</div>'
+ +'<div class="row">'+stp('prep','Подготовка, сек')+stp('yel','Жёлтая, до сек')+'</div><div class="row">'+stp('tmo','Ждать, сек')+stp('dist','Дистанция, м')+'</div>'
  +'<div class="card"><h2>Рука</h2><div class="seg">'+['Правая','Левая'].map(function(n,i){return'<button class="'+(cfg.hand==i?'on':'')+'" data-c="cfg.hand='+i+';sv(\'kr_cfg\',cfg);draw()">'+n+'</button>'}).join('')+'</div></div>'
  +'<div class="card"><h2>Микрофон</h2><div class="lv"><i id="lv"></i></div><div class="st '+micK+'" id="st">'+esc(micMsg)+'</div><button style="width:100%" class="'+(calib?'on':'')+'" data-c="calibrate()">'+(calib?'Завершить калибровку':'Калибровка')+'</button></div>'
  +'<button class="main go" data-c="start()">Начать тренировку</button>'}
